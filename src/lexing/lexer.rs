@@ -38,7 +38,7 @@ pub fn lex_program(program: &str) -> Vec<Token> {
             match_vec.push((token, m.start(), m.end()));
         }
     }
-    match_vec.sort_by(|a, b| a.1.cmp(&b.1));
+    match_vec.sort_by(|a, b| a.1.cmp(&b.1).then_with(|| (b.2 - b.1).cmp(&(a.2 - a.1))));
 
     let mut token_vec: Vec<Token> = Vec::new();
     for m in match_vec.iter() {
